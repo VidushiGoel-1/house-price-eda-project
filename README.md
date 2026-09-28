@@ -36,3 +36,10 @@ Target: `SalePrice` — regression (numeric).
 - Neighborhood strongly affects price: median SalePrice ranges from ~$103,000 (IDOTRR) to ~$315,000 (NridgHt)
 - Most expensive: NridgHt, NoRidge, StoneBr. Cheapest: IDOTRR, BrDale (and likely MeadowV)
 - Categorical columns need groupby/boxplots, since the correlation heatmap covers numeric columns only
+
+## Summary of Findings (House Prices)
+- **Missing values:** most were not truly missing. NaN meant the house lacks that feature (pool, alley, fence, garage, basement), so they were filled with 'None'. Only LotFrontage, MasVnrArea, GarageYrBlt and Electrical were genuinely missing (median/mode fill).
+- **Target:** SalePrice was right-skewed (1.88). Applied log(1+x) → skew 0.12.
+- **Outliers:** 2 houses with very large GrLivArea but low price were dropped (1460 → 1458 rows).
+- **Strongest predictors:** OverallQual (0.79), GrLivArea (0.71), GarageCars (0.64), plus Neighborhood (median price from ~$103k to ~$315k).
+- **Multicollinearity:** GarageCars/GarageArea (0.89) and TotalBsmtSF/1stFlrSF (0.8) are near-duplicates, so only one of each would be kept when modeling.
